@@ -1,0 +1,333 @@
+-- Judul: (Masukkan judul jika perlu, mis. Saitama Script)
+--// Heckes15 Intro Loader
+--// Made by Putri for Rehan 😈
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
+
+-- Hapus GUI lama (pcall supaya anti-error)
+pcall(function() StarterGui:ClearAllChildren() end)
+
+-- Buat ScreenGui
+local gui = Instance.new("ScreenGui")
+gui.Name = "Heckes15Intro"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- Background hitam glitch
+local bg = Instance.new("Frame")
+bg.Size = UDim2.new(1, 0, 1, 0)
+bg.BackgroundColor3 = Color3.new(0, 0, 0)
+bg.BorderSizePixel = 0
+bg.Parent = gui
+
+-- Teks Heckes15
+local text = Instance.new("TextLabel")
+text.Size = UDim2.new(1, 0, 1, 0)
+text.BackgroundTransparency = 1
+text.TextColor3 = Color3.new(1, 0, 0)
+text.TextScaled = true
+text.Font = Enum.Font.GothamBlack
+text.Text = ""
+text.Parent = bg
+
+-- Efek suara (pcall agar tidak crash kalau asset diblokir)
+pcall(function()
+	local sound = Instance.new("Sound", bg)
+	sound.SoundId = "rbxassetid://1844158571" -- suara glitch hacker
+	sound.Volume = 2
+	sound:Play()
+end)
+
+-- Efek ketik “Heckes15”
+local message = "HECKES15"
+for i = 1, #message do
+	pcall(function()
+		text.Text = string.sub(message, 1, i)
+	end)
+	task.wait(0.15)
+end
+
+-- Tambahkan Avatar Hitam muncul (opsional, pcall supaya aman)
+pcall(function()
+	local char = player.Character or player.CharacterAdded:Wait()
+	for _, part in pairs(char:GetChildren()) do
+		if part:IsA("BasePart") then
+			part.Color = Color3.new(0, 0, 0)
+		end
+	end
+end)
+
+-- Efek glitch cepat
+for i = 1, 10 do
+	pcall(function()
+		bg.BackgroundTransparency = math.random()
+		text.TextColor3 = Color3.new(math.random(), 0, 0)
+	end)
+	task.wait(0.05)
+end
+
+-- Hilang perlahan
+for i = 1, 30 do
+	pcall(function()
+		text.TextTransparency = i / 30
+		bg.BackgroundTransparency = i / 30
+	end)
+	task.wait(0.05)
+end
+
+pcall(function() gui:Destroy() end)
+
+-- =========================
+-- BAGIAN INI: Masukkan loadstring kamu di bawah
+-- =========================
+
+-- Contoh 1 (pakai raw gist)
+-- loadstring(game:HttpGet("https://gist.githubusercontent.com/USER/HASH/raw/NamaScript.lua", true))()
+
+-- Contoh 2 (inline)
+-- loadstring([==[ <isi script di sini> ]==])()
+
+-- << MASUKKAN LOADSTRING KAMU DI SINI >>
+-- Players TP Gui Script
+-- Created by ProGamerBoy610
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "PlayersTPGui"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+-- Main Frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 300, 0, 400)
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 0
+mainFrame.Visible = false
+mainFrame.Parent = screenGui
+
+-- Corner
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 10)
+corner.Parent = mainFrame
+
+-- Title Bar
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, 40)
+titleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+titleBar.BorderSizePixel = 0
+titleBar.Parent = mainFrame
+
+local titleCorner = Instance.new("UICorner")
+titleCorner.CornerRadius = UDim.new(0, 10)
+titleCorner.Parent = titleBar
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, -10, 1, 0)
+titleLabel.Position = UDim2.new(0, 5, 0, 0)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "Players TP GUI"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 18
+titleLabel.Parent = titleBar
+
+-- Close Button
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+closeButton.Position = UDim2.new(1, -35, 0, 5)
+closeButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+closeButton.Text = "X"
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.Font = Enum.Font.SourceSansBold
+closeButton.TextSize = 18
+closeButton.Parent = titleBar
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 5)
+closeCorner.Parent = closeButton
+
+-- Player List Frame
+local playerListFrame = Instance.new("ScrollingFrame")
+playerListFrame.Size = UDim2.new(1, -20, 1, -60)
+playerListFrame.Position = UDim2.new(0, 10, 0, 50)
+playerListFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+playerListFrame.BorderSizePixel = 0
+playerListFrame.ScrollBarThickness = 5
+playerListFrame.Parent = mainFrame
+
+local playerListCorner = Instance.new("UICorner")
+playerListCorner.CornerRadius = UDim.new(0, 8)
+playerListCorner.Parent = playerListFrame
+
+-- Teleport Button
+local teleportButton = Instance.new("TextButton")
+teleportButton.Size = UDim2.new(1, -20, 0, 40)
+teleportButton.Position = UDim2.new(0, 10, 1, -50)
+teleportButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+teleportButton.Text = "Teleport to Selected"
+teleportButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+teleportButton.Font = Enum.Font.SourceSansBold
+teleportButton.TextSize = 16
+teleportButton.Parent = mainFrame
+
+local teleportCorner = Instance.new("UICorner")
+teleportCorner.CornerRadius = UDim.new(0, 8)
+teleportCorner.Parent = teleportButton
+
+-- Toggle Button (for opening/closing GUI)
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0, 100, 0, 50)
+toggleButton.Position = UDim2.new(0, 10, 0, 10)
+toggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 200)
+toggleButton.Text = "TP GUI"
+toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleButton.Font = Enum.Font.SourceSansBold
+toggleButton.TextSize = 16
+toggleButton.Parent = screenGui
+
+local toggleCorner = Instance.new("UICorner")
+toggleCorner.CornerRadius = UDim.new(0, 8)
+toggleCorner.Parent = toggleButton
+
+-- Variables
+local selectedPlayer = nil
+local playerButtons = {}
+
+-- Functions
+local function createPlayerButton(playerName)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(1, -10, 0, 40)
+    button.Position = UDim2.new(0, 5, 0, #playerButtons * 45)
+    button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    button.Text = playerName
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Font = Enum.Font.SourceSans
+    button.TextSize = 14
+    button.Name = playerName
+    button.Parent = playerListFrame
+
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.CornerRadius = UDim.new(0, 6)
+    buttonCorner.Parent = button
+
+    button.MouseButton1Click:Connect(function()
+        -- Deselect all other buttons
+        for _, btn in pairs(playerButtons) do
+            btn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+        end
+        -- Select this button
+        button.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+        selectedPlayer = playerName
+    end)
+
+    table.insert(playerButtons, button)
+end
+
+local function updatePlayerList()
+    -- Clear existing buttons
+    for _, button in pairs(playerButtons) do
+        button:Destroy()
+    end
+    table.clear(playerButtons)
+
+    -- Add current players (exclude self)
+    for _, p in pairs(Players:GetPlayers()) do
+        if p.Name ~= player.Name then
+            createPlayerButton(p.DisplayName .. " (" .. p.Name .. ")")
+        end
+    end
+
+    -- Update canvas size
+    playerListFrame.CanvasSize = UDim2.new(0, 0, 0, #playerButtons * 45 + 10)
+end
+
+local function teleportToPlayer(targetPlayer)
+    if not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        return
+    end
+
+    local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+    player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition + Vector3.new(0, 5, 0))
+end
+
+local function toggleGui()
+    mainFrame.Visible = not mainFrame.Visible
+end
+
+-- Events
+closeButton.MouseButton1Click:Connect(toggleGui)
+toggleButton.MouseButton1Click:Connect(toggleGui)
+teleportButton.MouseButton1Click:Connect(function()
+    if selectedPlayer then
+        local targetPlayer = Players:FindFirstChild(selectedPlayer:match("%((.-)%)")) or Players:FindFirstChild(selectedPlayer:match("^(.-)%s%("))
+        if targetPlayer then
+            teleportToPlayer(targetPlayer)
+        end
+    end
+end)
+
+-- Update player list when players join/leave
+Players.PlayerAdded:Connect(updatePlayerList)
+Players.PlayerRemoving:Connect(function(leavingPlayer)
+    for i, button in ipairs(playerButtons) do
+        if button.Name == leavingPlayer.Name then
+            button:Destroy()
+            table.remove(playerButtons, i)
+            break
+        end
+    end
+    if selectedPlayer and selectedPlayer:match(leavingPlayer.Name) then
+        selectedPlayer = nil
+    end
+end)
+
+-- Initial update
+updatePlayerList()
+
+-- Make draggable
+local dragging = false
+local dragInput
+local dragStart
+local startPos
+
+local function updateInput(input)
+    local delta = input.Position - dragStart
+    mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+titleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+titleBar.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+RunService.RenderStepped:Connect(function()
+    if dragging and dragInput then
+        updateInput(dragInput)
+    end
+end)
